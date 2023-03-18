@@ -1,0 +1,22 @@
+.button {
+    color: black;
+    padding: 15px 15px;
+    border-radius: 4px;
+    border: 3px solid #F09C89;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #F09C89;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-color: black;
+    padding: 5px;
+    text-align: center;
+}
+
+td:hover {
+    background-color: #F09C89;
+}
