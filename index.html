@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Prisoner's Dilemma Game</title>
+        <link rel="stylesheet" type="text/css" href="css/project.css">
+        <script defer type="text/javascript" src="appscripts/project.js"></script>
+    </head>
+
+<h2>Instructions:</h2>
+<p>You are deciding how to split a $1000 bonus with your colleagues. Here are the rules:</p>
+<ol>
+    <li>If you and your colleague both cooperate and play nice, your boss will split the $1000 and give you $500 each.</li>
+    <li>If you betray your colleague by complaining about them to your boss, your boss will trust you and give the full $1000 to you, but also take $500 away from them.</li>
+    <li>However, if both of you decide to betray each other, your boss will be angry and take $1000 away from both of you.</li>
+<br>
+<table>
+    <tr>
+        <td></td>
+        <td>They cooperate</td>
+        <td>They betray</td>
+    </tr>
+    <tr>
+        <td>You cooperate</td>
+        <td>You win $500</td>
+        <td>You lose $500</td>
+    </tr>
+    <tr>
+        <td>You betray</td>
+        <td>You win $1000</td>
+        <td>You lose $1000</td>
+    </tr>
+</table>
+<br>
+    <li>If you run out of money, you lose - but you can win by accumulating $5000.</li>
+</ol>
+<p id="choose">What will you choose? Click "Start Round" when you are ready.</p>
+<hr>
+<h4 id="character" style = "text-align: center;"></h4>
+
+<!-- creating buttons for player to press -->
+<button class = "button" id="round" onclick="round()">Start Round</button>
+<button class = "button" id="cooperate" onclick="cooperate()" hidden="hidden">Cooperate</button>
+<button class = "button" id="betray" onclick="betray()" hidden="hidden">Betray</button>
+<br><br>
+<div id="playerChoice"></div>
+<div id="overallChoice"></div>
+<div id="playerMoney"></div>
+
+</html>
