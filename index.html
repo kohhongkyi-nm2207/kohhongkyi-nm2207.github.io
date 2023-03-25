@@ -34,17 +34,23 @@
 <br>
     <li>If you run out of money, you lose - but you can win by accumulating $5000.</li>
 </ol>
-<p id="choose">What will you choose? Click "Start Round" when you are ready.</p>
+<h4 id="choose" style = "text-align: center;">What will you choose? Click "Start Round" when you are ready.</h4>
 <hr>
 <h4 id="character" style = "text-align: center;"></h4>
+<p id="characterDescription" style = "text-align: center;"></p>
 
 <!-- creating buttons for player to press -->
-<button class = "button" id="round" onclick="round()">Start Round</button>
-<button class = "button" id="cooperate" onclick="cooperate()" hidden="hidden">Cooperate</button>
-<button class = "button" id="betray" onclick="betray()" hidden="hidden">Betray</button>
-<br><br>
-<div id="playerChoice"></div>
-<div id="overallChoice"></div>
-<div id="playerMoney"></div>
+<div id="game">
+    <button class = "button" id="round" onclick="round()">Start Round</button>
+    <button class = "button" id="cooperate" onclick="cooperate()" hidden="hidden">Cooperate</button>
+    <button class = "button" id="betray" onclick="betray()" hidden="hidden">Betray</button>
+    <br><br>
+    <div id="playerChoice"></div>
+    <div id="overallChoice"></div>
+    <div id="playerMoney"></div>
+    <h4 id="gameEnd" style = "text-align: center;"></h4>
+    <br>
+    <button class = "button" id="restart" onclick="location.reload()" hidden="hidden">Play again?</button>
+</div>
 
 </html>
