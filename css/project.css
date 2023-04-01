@@ -24,3 +24,10 @@ table, th, td {
 td:hover {
     background-color: #F09C89;
 }
+
+#box {
+    border: 5px solid #F09C89;
+    align-self: center;
+    width: 400px;
+    height: 200px;
+}

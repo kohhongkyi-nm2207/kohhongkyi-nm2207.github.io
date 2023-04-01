@@ -32,15 +32,18 @@
     </tr>
 </table>
 <br>
-    <li>If you run out of money, you lose - but you can win by accumulating $5000.</li>
+    <li>You currently have $2000. If you run out of money, you lose - but you can win by accumulating $5000.</li>
 </ol>
+Weekly diary entries <a href="https://docs.google.com/document/d/1aknyLPJLj-H63MX4IroFeb5UFAtCP867/edit?usp=sharing&ouid=104485055491457943838&rtpof=true&sd=true" target="_blank">here</a>
+
 <h4 id="choose" style = "text-align: center;">What will you choose? Click "Start Round" when you are ready.</h4>
 <hr>
-<h4 id="character" style = "text-align: center;"></h4>
-<p id="characterDescription" style = "text-align: center;"></p>
 
 <!-- creating buttons for player to press -->
 <div id="game">
+    <h4 id="character" style = "text-align: center;"></h4>
+    <canvas id="box" hidden="hidden"> </canvas>
+    <p id="characterDescription" style = "text-align: center;"></p>
     <button class = "button" id="round" onclick="round()">Start Round</button>
     <button class = "button" id="cooperate" onclick="cooperate()" hidden="hidden">Cooperate</button>
     <button class = "button" id="betray" onclick="betray()" hidden="hidden">Betray</button>
@@ -52,7 +55,5 @@
     <br>
     <button class = "button" id="restart" onclick="location.reload()" hidden="hidden">Play again?</button>
 </div>
-<br><br><br>
-Weekly diary entries <a href="https://docs.google.com/document/d/1aknyLPJLj-H63MX4IroFeb5UFAtCP867/edit?usp=sharing&ouid=104485055491457943838&rtpof=true&sd=true" target="_blank">here</a>
 
 </html>
