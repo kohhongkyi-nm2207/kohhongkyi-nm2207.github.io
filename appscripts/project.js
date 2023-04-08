@@ -7,31 +7,45 @@ var playerChoice = "";
 var currentCharacter;
 var characterName;
 var characterDescription;
-var characterImage;
+var characterNeutral;
+var characterCooperate;
+var characterBetray;
+var characterChoice;
+var cooperateCount = 0;
+var betrayCount = 0;
+var betrayalRate = 0;
+var betrayalRateRound=0;
+
+
 
 //what happens when you press the buttons
 let cooperate = function() {
     playerChoice = "cooperate";
+    cooperateCount++;
     document.getElementById("playerChoice").innerHTML="You have chosen to cooperate.";
     currentCharacter.game(playerChoice);
+    outcomeAnimate();
     checkPlayerCondition();
     roundEnd();
 }
 let betray = function() {  
     playerChoice = "betray";
+    betrayCount++;
     document.getElementById("playerChoice").innerHTML="You have chosen to betray.";
     currentCharacter.game(playerChoice);
+    outcomeAnimate();
     checkPlayerCondition();
     roundEnd();
 }
-
-// establishing the characters and the different outcomes for each character - still need to add visuals for each character. only 2 so far but a third with 50/50 probability will be added.
+// establishing the characters and the different outcomes for each character 
 //each character currently is an object containing their name, description, image, and how the game will operate if they are spawned.
 
 var Gerald = {
     characterName: "Gerald",
-    characterImage: "resources/geraldNeutral.png",
+    characterNeutral: "resources/geraldNeutral.jpg",
+    characterCooperate: "resources/geraldCooperate.jpg",
     game: function(playerChoice) {
+        characterChoice = 1;
         if (playerChoice == "cooperate") {
             playerMoney = playerMoney + 500;
             document.getElementById("overallChoice").innerHTML="Gerald also cooperated - you win $500!";
@@ -45,8 +59,10 @@ var Gerald = {
 }
 var Emily = {
     characterName: "Emily",
-    characterImage: "resources/emilyNeutral.png",
+    characterNeutral: "resources/emilyNeutral.jpg",
+    characterBetray: "resources/emilyBetray.jpg",
     game: function(playerChoice) {
+        characterChoice = 0;
         if (playerChoice == "cooperate") {
             playerMoney = playerMoney - 500;
             document.getElementById("overallChoice").innerHTML="Emily betrayed you - you lose $500!";
@@ -60,47 +76,50 @@ var Emily = {
 }
 var Nellie = {
     characterName: "Nellie",
-    characterImage: "resources/nellieNeutral.png",
+    characterNeutral: "resources/nellieNeutral.jpg",
+    characterCooperate: "resources/nellieCooperate.jpg",
+    characterBetray: "resources/nellieBetray.jpg",
     game: function(playerChoice) {
-    let nellieChoice = Math.floor(Math.random()*2)
-    if (playerChoice == "cooperate" && nellieChoice == 1) {
+    let characterChoice = Math.floor(Math.random()*2)
+    if (playerChoice == "cooperate" && characterChoice == 1) {
         playerMoney = playerMoney + 500;
         document.getElementById("overallChoice").innerHTML="Nellie also cooperated - you win $500!";
-    } else if (playerChoice == "cooperate" && nellieChoice == 0) {
+    } else if (playerChoice == "cooperate" && characterChoice == 0) {
         playerMoney = playerMoney - 500;
         document.getElementById("overallChoice").innerHTML="Nellie betrayed you - you lose $500!";
-    } else if (playerChoice == "betray" && nellieChoice == 1) {
+    } else if (playerChoice == "betray" && characterChoice == 1) {
         playerMoney = playerMoney + 1000;
         document.getElementById("overallChoice").innerHTML="Nellie cooperated - you win $1000!";
-    } else if (playerChoice == "betray" && nellieChoice == 0) {
+    } else if (playerChoice == "betray" && characterChoice == 0) {
         playerMoney = playerMoney - 1000;
         document.getElementById("overallChoice").innerHTML="Nellie also betrayed you - you lose $1000!";
     }
     document.getElementById("playerMoney").innerHTML="You now have $" + playerMoney;
     },
-    characterDescription: "Kind of a wild card. We know nothing about her except she talks to Gerald sometimes. But everyone's friends with Gerald, so."
+    characterDescription: "She's the new intern, and she's kind of a wild card. We know nothing about her except she talks to Gerald sometimes. But everyone's friends with Gerald, so."
 }
 var Paul = {
     characterName: "Paul",
-    characterImage: "",
+    characterNeutral: "resources/paulNeutral.jpg",
+    characterCooperate: "resources/paulCooperate.jpg",
+    characterBetray: "resources/paulBetray.jpg",    
     game: function(playerChoice) {
         let x = Math.random();
-        let paulChoice;
         if (x < 0.7) {
-            paulChoice = 1
+            characterChoice = 1
         } else {
-            paulChoice = 0
+            characterChoice = 0
         }
-        if (playerChoice == "cooperate" && paulChoice == 1) {
+        if (playerChoice == "cooperate" && characterChoice == 1) {
             playerMoney = playerMoney + 500;
             document.getElementById("overallChoice").innerHTML="Paul also cooperated - you win $500!";
-        } else if (playerChoice == "cooperate" && paulChoice == 0) {
+        } else if (playerChoice == "cooperate" && characterChoice == 0) {
             playerMoney = playerMoney - 500;
             document.getElementById("overallChoice").innerHTML="Paul betrayed you - you lose $500!";
-        } else if (playerChoice == "betray" && paulChoice == 1) {
+        } else if (playerChoice == "betray" && characterChoice == 1) {
             playerMoney = playerMoney + 1000;
             document.getElementById("overallChoice").innerHTML="Paul cooperated - you win $1000!";
-        } else if (playerChoice == "betray" && paulChoice == 0) {
+        } else if (playerChoice == "betray" && characterChoice == 0) {
             playerMoney = playerMoney - 1000;
             document.getElementById("overallChoice").innerHTML="Paul also betrayed you - you lose $1000!";
         }
@@ -124,13 +143,15 @@ var selectCharacter = function(characters) {
 
 // what happens during each round
 let round = function() {
+    loadSessionStorage();
+    ctx.clearRect(0,0,400,400);
     document.getElementById("choose").innerHTML=""
     //reset the variables at the start of a round
     playerChoice = "";
     currentCharacter = selectCharacter(characters);
     document.getElementById("character").innerHTML="The current character you are playing against is: " + currentCharacter.characterName;
     document.getElementById("characterDescription").innerHTML = currentCharacter.characterDescription
-    animate();
+    neutralAnimate();
     displayGameButtons();
 }
 // show start round button and hide game buttons and text
@@ -140,7 +161,6 @@ var displayStartRoundButton = function() {
     document.getElementById("betray").setAttribute("hidden", "hidden");
     document.getElementById("character").innerHTML="";
     document.getElementById("characterDescription").innerHTML="";
-    ctx.clearRect(0,0,400,400)
 }
 // hide start round button and show game buttons
 var displayGameButtons = function() {
@@ -166,6 +186,9 @@ function checkPlayerCondition() {
 
 //function to decide what to do at the end of the round
 function roundEnd() {
+    betrayalRate = (betrayCount*100) / (betrayCount + cooperateCount);
+    betrayalRateRound = Math.round(betrayalRate*100) / 100;
+    document.getElementById("betrayalRate").innerHTML = "Your betrayal rate: " + betrayalRateRound + "%"
     if (checkPlayerCondition() == "end") {
         document.getElementById("cooperate").setAttribute("hidden", "hidden");
         document.getElementById("betray").setAttribute("hidden", "hidden");
@@ -173,7 +196,24 @@ function roundEnd() {
     } else {
         displayStartRoundButton();
     }
+    saveSessionStorage();
 }
+
+function saveSessionStorage() {
+    sessionStorage.setItem("cooperateCount", cooperateCount);
+    sessionStorage.setItem("betrayCount", betrayCount);
+}
+function loadSessionStorage() {
+    cooperateCount = sessionStorage.getItem("cooperateCount");
+    betrayCount = sessionStorage.getItem("betrayCount");
+    if (cooperateCount == null || betrayCount == null) {
+        cooperateCount = 0;
+        betrayCount = 0;
+    } else {
+        cooperateCount = parseInt(sessionStorage.getItem("cooperateCount"));
+        betrayCount = parseInt(sessionStorage.getItem("betrayCount"));
+    }
+    }
 
 //setup for animation of characters
 let box = document.getElementById("box");
@@ -183,17 +223,39 @@ box.height = 400;
 let movingx=-200
 var animationImage;
 
-//animation function 
-function animate() {
-    let animationImage = new Image();
-    animationImage.src= currentCharacter.characterImage;
+//neutral character animation function 
+function neutralAnimate() {
+    let neutralImage = new Image();
+    neutralImage.src = currentCharacter.characterNeutral;
     //ctx.drawImage(image source, sx, sy, sw, sh, dx, dy, dw, dh)
-    ctx.drawImage(animationImage, 0, 0, 480, 480, movingx, 0, 200, 400);
+    ctx.drawImage(neutralImage, 0, 0, 510, 510, movingx, 0, 200, 400);
     if (movingx <= 100) {
         movingx = movingx + 4;
     } else {
         movingx = -200;
         return;
     }
-    requestAnimationFrame(animate);
+    requestAnimationFrame(neutralAnimate);
 };
+
+//outcome character animation function
+function outcomeAnimate() {
+    let outcomeImage = new Image();
+    if (characterChoice = 1) {
+        outcomeImage.src = currentCharacter.characterCooperate;
+    } else {
+        outcomeImage.src = currentCharacter.characterBetray;
+    }
+    ctx.clearRect(0,0,400,400);
+    console.log(outcomeImage.src);
+    ctx.drawImage(outcomeImage, 0, 0, 510, 510, movingx, 0, 200, 400);
+    if (movingx <= 100) {
+        movingx = movingx + 4;
+    } else {
+        movingx = -200;
+        return;
+    }
+    requestAnimationFrame(neutralAnimate);
+}
+
+

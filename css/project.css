@@ -26,8 +26,22 @@ td:hover {
 }
 
 #box {
-    border: 5px solid #F09C89;
+    border: 0px solid #F09C89;
     align-self: center;
     width: 400px;
     height: 200px;
 }
+
+.parent {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr;
+    grid-template-rows: repeat(2, 0.5fr) repeat(2, 1fr) 0.5fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    }
+    
+    .div1 { grid-area: 1 / 2 / 2 / 5; }
+    .div2 { grid-area: 3 / 1 / 5 / 2; }
+    .div3 { grid-area: 3 / 5 / 5 / 6; }
+    .div4 { grid-area: 3 / 2 / 5 / 5; }
+    .div5 { grid-area: 5 / 2 / 6 / 5; }
