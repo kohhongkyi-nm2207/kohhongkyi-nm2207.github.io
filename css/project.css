@@ -1,17 +1,39 @@
-.button {
-    color: black;
-    padding: 15px 15px;
-    border-radius: 4px;
-    border: 3px solid #F09C89;
-    transition-duration: 0.4s;
-    text-align: center;
-}
-.button:hover {
-    background-color: #F09C89;
+body {
+    font-family: "Inconsolata", 'Space Mono', Courier, monospace;
+    background-color: #f0f0f0;
+    color: #333333;
+    font-size: small;
 }
 
-#game {
+h4 {
+    color:#cc6600;
+    font-family: "Karla", "Insonsolata", "Space Mono";
+}
+
+.button {
+    color: #333333;
+    padding: 15px 15px;
+    border-radius: 4px;
+    border: 2px solid #cc6600;
+    transition-duration: 0.4s;
     text-align: center;
+    font-family: "Karla", 'Courier New', Courier, monospace;
+}
+.button:hover {
+    background-color: #cc6600;
+}
+
+.popupButton {
+    color: #333333;
+    padding: 10px 10px;
+    border-radius: 2px;
+    border: 2px solid #333333;
+    transition-duration: 0.4s;
+    text-align: center;
+    font-family: "Karla", 'Courier New', Courier, monospace;
+}
+.popupButton:hover {
+    background-color: #fff;
 }
 
 table, th, td {
@@ -22,26 +44,56 @@ table, th, td {
 }
 
 td:hover {
-    background-color: #F09C89;
+    background-color: #cc6600;
 }
 
 #box {
-    border: 0px solid #F09C89;
+    border: 0px solid #cc6600;
     align-self: center;
     width: 400px;
     height: 200px;
 }
 
+#popup {
+    width: 400px;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    background: #fff;
+    padding: 0px 10px 10px;
+    transition: transform 0.4s, top 0.4s;
+    visibility: hidden;
+}
+
+
 .parent {
     display: grid;
-    grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr;
-    grid-template-rows: repeat(2, 0.5fr) repeat(2, 1fr) 0.5fr;
+    grid-template-columns: 1fr 1.5fr repeat(3, 1fr) 1.5fr 1fr;
+    grid-template-rows: 100px 50px repeat(3, 1fr) 10px 0.5fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     }
-    
-    .div1 { grid-area: 1 / 2 / 2 / 5; }
-    .div2 { grid-area: 3 / 1 / 5 / 2; }
-    .div3 { grid-area: 3 / 5 / 5 / 6; }
-    .div4 { grid-area: 3 / 2 / 5 / 5; }
-    .div5 { grid-area: 5 / 2 / 6 / 5; }
+
+    .parent >* {
+        border: 0px solid #000000;
+        text-align: center;
+    }
+
+    #instructions { grid-area: 2 / 3 / 7 / 6; }
+
+
+
+    .header { grid-area: 2 / 3 / 3 / 6; }
+    .side1 { 
+        grid-area: 4 / 2 / 5 / 3;
+    }
+    .side2 { grid-area: 4 / 6 / 5 / 7; }
+    .game { 
+        grid-area: 3 / 3 / 6 / 6;
+    }
+    .footer { 
+        grid-area: 6 / 3 / 7 / 6; 
+    }
