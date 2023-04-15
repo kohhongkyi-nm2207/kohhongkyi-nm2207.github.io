@@ -1,15 +1,46 @@
+* {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 body {
     font-family: "Inconsolata", 'Space Mono', Courier, monospace;
     background-color: #f0f0f0;
     color: #333333;
-    font-size: small;
+    font-size: medium;
 }
 
 h4 {
     color:#cc6600;
     font-family: "Karla", "Insonsolata", "Space Mono";
 }
+#gameEnd {
+    font-size: xx-large;
+}
 
+/* animating text with typewriter effect */
+.text {
+    display: inline-block;
+    overflow: visible;
+}
+.textanimate {
+    border-right: 1px solid;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: 
+        typing 2s steps(20),
+        cursor .4s step-end infinite alternate;
+}
+@keyframes cursor {
+    50% { border-color: transparent; }
+}
+@keyframes typing {
+    from { width: 0; }
+}
+
+/* formatting for most of the buttons */
 .button {
     color: #333333;
     padding: 15px 15px;
@@ -23,6 +54,24 @@ h4 {
     background-color: #cc6600;
 }
 
+/* table formatting */
+table, th, td {
+    border: 1px solid;
+    border-color: black;
+    padding: 4px;
+    text-align: center;
+}
+td:hover {
+    background-color: #cc6600;
+}
+
+/* this is where the image is displayed */
+#box {
+    width: 400px;
+    height: 200px;
+}
+
+/* formatting for the popup instructions button */
 .popupButton {
     color: #333333;
     padding: 10px 10px;
@@ -35,25 +84,7 @@ h4 {
 .popupButton:hover {
     background-color: #fff;
 }
-
-table, th, td {
-    border: 1px solid;
-    border-color: black;
-    padding: 5px;
-    text-align: center;
-}
-
-td:hover {
-    background-color: #cc6600;
-}
-
-#box {
-    border: 0px solid #cc6600;
-    align-self: center;
-    width: 400px;
-    height: 200px;
-}
-
+/* popup content formatting */
 #popup {
     width: 400px;
     border-radius: 10px;
@@ -62,38 +93,29 @@ td:hover {
     left: 50%;
     transform: translate(-50%, -50%) scale(0.1);
     text-align: center;
-    background: #fff;
+    background-color: #fff;
     padding: 0px 10px 10px;
     transition: transform 0.4s, top 0.4s;
     visibility: hidden;
 }
 
-
+/* using css grid to structure the page. has 6 sections within the parent: instructions, header, side1, side2, game, and footer */
 .parent {
     display: grid;
-    grid-template-columns: 1fr 1.5fr repeat(3, 1fr) 1.5fr 1fr;
-    grid-template-rows: 100px 50px repeat(3, 1fr) 10px 0.5fr;
+    grid-template-columns: 0.5fr 300px repeat(3, 1fr) 300px 0.5fr;
+    grid-template-rows: 100px 100px repeat(2, 1fr) 100px repeat(2, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     }
 
-    .parent >* {
-        border: 0px solid #000000;
-        text-align: center;
-    }
-
     #instructions { grid-area: 2 / 3 / 7 / 6; }
 
-
-
     .header { grid-area: 2 / 3 / 3 / 6; }
-    .side1 { 
-        grid-area: 4 / 2 / 5 / 3;
-    }
-    .side2 { grid-area: 4 / 6 / 5 / 7; }
-    .game { 
-        grid-area: 3 / 3 / 6 / 6;
-    }
-    .footer { 
-        grid-area: 6 / 3 / 7 / 6; 
-    }
+    
+    .side1 { grid-area: 3 / 2 / 4 / 3; }
+
+    .side2 { grid-area: 3 / 6 / 4 / 7; }
+    
+    .game { grid-area: 3 / 3 / 6 / 6; }
+    
+    .footer { grid-area: 5 / 3 / 6 / 6; }

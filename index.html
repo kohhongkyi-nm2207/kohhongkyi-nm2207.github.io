@@ -5,38 +5,105 @@
         <title>Prisoner's Dilemma Game</title>
         <link rel="stylesheet" type="text/css" href="css/project.css">
         <script defer type="text/javascript" src="appscripts/project.js"></script>
-        <!-- loading fonts -->
+        <!-- loading fonts from googlefonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400&family=Karla:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400&family=Karla:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     </head>
 
-<div class="parent">
-    <div class="header"> 
-        <h4 id="character" style = "text-align: center;"></h4>
-        <h4 id="gameEnd" style = "text-align: center;"></h4>
-    </div>
+    <body>
+        <div class="parent">
 
-    <div class="side1"> 
-        <div id="playerChoice"></div>
-        <div id="overallChoice"></div>
-    </div>
-    
-    <div class="side2"> 
-        <div id="playerMoney"></div>
-        <div id="betrayalRate"></div> 
-        <br><br>
-        <button id="popupButton" class="popupButton" onclick="openPopup()" hidden="hidden">Forgot the rules?</button>   
-    </div>
+            <div class="header"> 
+                <!-- header displays the character name and the game over text -->
+                <h4 id="character"></h4>
+                <div class="text">
+                    <h4 id="gameEnd" hidden="hidden"></h4>
+                </div>
+            </div>
+        
+            <div class="side1">
+                <!-- left side: displays the player's choice and overall outcome -->
+                <br><br>
+                <div class="text">
+                    <p id="playerChoice"></p>
+                    <p id="overallChoice" hidden="hidden"></p>
+                </div>
+            </div>
+            
+            <div class="side2"> 
+                <!-- right side: displays betrayal rate, instructions popup button, and player money status -->
+                <div>
+                    <p id="betrayalRate"></p> 
+                </div>
+                <button id="popupButton" class="popupButton" onclick="openPopup()" hidden="hidden">Forgot the rules?</button>   
+                <br>
+                <div class="text">
+                    <p id="playerMoney"></p>
+                </div>
+            </div>
+        
+            <div id="instructions">
+                <!-- instructions for the game (long ver), which is shown at the beginning and then hidden for the rest of the game -->
+                <h2><strong>Instructions:</strong></h2>
+                <p>You and your colleagues are trying to decide how to split a $1000 bonus - frankly, it's tough. However, how you both act can affect the split.</p>
+                <ol>
+                    <li>If you and your colleague both <strong>cooperate</strong> and play nice, your boss will split the $1000 and give you $500 each. Fair and square.</li>
+                    <li>If you <strong>betray</strong> your colleague by snitching on them, your boss will trust you and give the full $1000 to you, but also take $500 away from them.</li>
+                    <li>If both of you decide to betray each other, your boss will be angry <em>("how petty!", he'd say)</em> and take $1000 away from both of you.</li>
+                </ol>
+                <!-- matrix of outcomes -->
+                <table>
+                    <tr>
+                        <td></td>
+                        <td>They cooperate</td>
+                        <td>They betray</td>
+                    </tr>
+                    <tr>
+                        <td>You cooperate</td>
+                        <td>You win $500</td>
+                        <td>You lose $500</td>
+                    </tr>
+                    <tr>
+                        <td>You betray</td>
+                        <td>You win $1000</td>
+                        <td>You lose $1000</td>
+                    </tr>
+                </table>
+                <br>
+                <p>
+                    You currently have $2000. If you run out of money, you lose - but you can win by accumulating $5000. <br> <br>
+                    You'll be going up against 6 of your colleagues, all with different personalities. Choose wisely! <br><br>
+                </p>
+                <h4 id="choose">Start when you are ready.</h4>
+                <!-- start game button is located under the instructions (long ver) -->
+                <button class = "button" id="game" onclick="round()">Start Game</button>
+            </div>
+        
+            <div class="game"> 
+                <!-- center area where the character spawns -->
+                <canvas id="box"> </canvas>
+                <p id="characterDescription"></p>
+            </div>
+        
+            <div class="footer"> 
+                <!-- this holds most of the buttons: the game buttons, next round, and restart buttons -->
+                <br><br>
+                <button class = "button" id="round" onclick="round()" hidden="hidden">Next Round</button>
+                <button class = "button" id="cooperate" onclick="cooperate()" hidden="hidden">Cooperate</button>
+                <button class = "button" id="betray" onclick="betray()" hidden="hidden">Betray</button>
+                <button class = "button" id="restart" onclick="location.reload()" hidden="hidden">Play again?</button>
+                <br><br>
+            </div>
+        
+        </div>
+        
+        Weekly diary entries <a href="https://docs.google.com/document/d/1aknyLPJLj-H63MX4IroFeb5UFAtCP867/edit?usp=sharing&ouid=104485055491457943838&rtpof=true&sd=true" target="_blank">here</a>
+    </body>
 
-    <div id="instructions">
-        <h2><strong>Instructions:</strong></h2>
-        <p>You and your colleagues are trying to decide how to split a $1000 bonus - frankly, it's tough. However, how you both act can affect the split.</p>
-        <ol>
-            <li>If you and your colleague both cooperate and play nice, your boss will split the $1000 and give you $500 each. Fair and square.</li>
-            <li>If you betray your colleague by snitching on them, your boss will trust you and give the full $1000 to you, but also take $500 away from them.</li>
-            <li>If both of you decide to betray each other, your boss will be angry <em>("how petty!", he'd say)</em> and take $1000 away from both of you.</li>
-        </ol>
+    <div id="popup">
+        <!-- contents of the popup: includes the outcome matrix and a button to close the popup -->
+        <h4>Here is the matrix of outcomes:</h4>
         <table>
             <tr>
                 <td></td>
@@ -55,54 +122,9 @@
             </tr>
         </table>
         <br>
-        <p style="text-align: center;">
-            You currently have $2000. If you run out of money, you lose - but you can win by accumulating $5000. <br> <br>
-            You'll be going up against 6 of your colleagues, all with different personalities. Choose wisely! <br><br>
-        </p>
-        <h4 id="choose" style = "text-align: center;">Start when you are ready.</h4>
-    </div>
-
-    <div class="game"> 
-        <canvas id="box" hidden="hidden"> </canvas>
-        <p id="characterDescription" style = "text-align: center;"></p>
-    </div>
-
-    <div class="footer"> 
-        <button class = "button" id="round" onclick="round()">Start Round</button>
-        <button class = "button" id="cooperate" onclick="cooperate()" hidden="hidden">Cooperate</button>
-        <button class = "button" id="betray" onclick="betray()" hidden="hidden">Betray</button>
-        <button class = "button" id="restart" onclick="location.reload()" hidden="hidden">Play again?</button>
+        Reach $5000 to win. 
         <br><br>
+        <button class="popupButton" onclick="closePopup()">Okay got it!</button> <br>
     </div>
-    
-</div>
-
-Weekly diary entries <a href="https://docs.google.com/document/d/1aknyLPJLj-H63MX4IroFeb5UFAtCP867/edit?usp=sharing&ouid=104485055491457943838&rtpof=true&sd=true" target="_blank">here</a>
-
-
-<div id="popup">
-    <h4>Here is the matrix of outcomes:</h4>
-    <table>
-        <tr>
-            <td></td>
-            <td>They cooperate</td>
-            <td>They betray</td>
-        </tr>
-        <tr>
-            <td>You cooperate</td>
-            <td>You win $500</td>
-            <td>You lose $500</td>
-        </tr>
-        <tr>
-            <td>You betray</td>
-            <td>You win $1000</td>
-            <td>You lose $1000</td>
-        </tr>
-    </table>
-    <br>
-    Reach $5000 to win. 
-    <br> <br>
-    <button class="popupButton" onclick="closePopup()">Okay got it!</button> <br>
-</div>
 
 </html>
