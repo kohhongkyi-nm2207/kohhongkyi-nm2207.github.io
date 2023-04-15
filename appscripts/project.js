@@ -176,7 +176,11 @@ function round() {
     //displaying the character, description, and betrayal rate for the player
     document.getElementById("character").innerHTML="The current character you are playing against is: " + currentCharacter.characterName;
     document.getElementById("characterDescription").innerHTML = currentCharacter.characterDescription
-    document.getElementById("betrayalRate").innerHTML = "Your betrayal rate: " + betrayalRateRound + "%"
+    if (betrayalRate >=0 ) {
+        document.getElementById("betrayalRate").innerHTML = "Your betrayal rate: " + betrayalRateRound + "%"
+    } else {
+        document.getElementById("betrayalRate").innerHTML = "Your betrayal rate: __%"
+    }
 };
 
 // this function hides the "start game/next round" button and shows the game buttons and text - runs after game/round is started
